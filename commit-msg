@@ -1,0 +1,13 @@
+#!/usr/bin/env perl
+use Term::ANSIColor;
+
+my $commit_message = $ARGV[0];
+
+my $branch = (grep {$_ =~ /\*/} split(/\n/, `git branch`))[-1];
+
+$branch =~ s/\*\ //g;
+
+if (!$commit_message !~ m/$branch/) {
+    print colored(['red'], 'Faild: コミットメッセージにブランチ名入れろー', "\n");
+    exit(1);
+}
